@@ -39,57 +39,54 @@ jobs:
       - name: Test
         run: flutter test
 
+      - name: Create build version
+        run: |
+          echo "BUILD_VERSION=${GITHUB_SHA::8}-${GITHUB_RUN_NUMBER}" >> "$GITHUB_ENV"
+
       - name: Build web
         run: |
-          BUILD_VERSION="${GITHUB_SHA::8}-${GITHUB_RUN_NUMBER}"
-          export BUILD_VERSION
-          echo "Building Dollar City web with version ${BUILD_VERSION}"
-
           flutter build web \
             --release \
             --base-href "/Dollar-City/" \
             --dart-define=APP_BUILD_VERSION="${BUILD_VERSION}"
 
-          # Cache-bust Flutter bootstrap so Safari does not reuse a stale script.
           python3 - <<'PY'
-          from pathlib import Path
-          import json
           import os
+          from pathlib import Path
 
-          build_version = os.environ["BUILD_VERSION"]
-          path = Path("build/web/index.html")
-          content = path.read_text()
-          if 'src="flutter_bootstrap.js"' not in content:
-              raise SystemExit("flutter_bootstrap.js script tag not found in index.html")
-          content = content.replace(
-              'src="flutter_bootstrap.js"',
-              f'src="flutter_bootstrap.js?v={build_version}"',
-          )
-          path.write_text(content)
-          print(f"Updated index.html bootstrap cache buster to v={build_version}")
+          version = os.environ["BUILD_VERSION"]
 
-          version_path = Path("build/web/version.json")
-          version_path.write_text(
-              json.dumps(
-                  {
-                      "version": build_version,
-                      "commit": os.environ["GITHUB_SHA"],
-                      "runNumber": str(os.environ["GITHUB_RUN_NUMBER"]),
-                  },
-                  indent=2,
-              )
-              + "\n"
-          )
-          print(f"Wrote {version_path}")
+          index_path = Path("build/web/index.html")
+          content = index_path.read_text(encoding="utf-8")
+
+          old = 'src="flutter_bootstrap.js"'
+          new = f'src="flutter_bootstrap.js?v={version}"'
+
+          if old not in content:
+              raise RuntimeError("flutter_bootstrap.js script tag was not found")
+
+          content = content.replace(old, new, 1)
+          index_path.write_text(content, encoding="utf-8")
+
+          Path("build/web/404.html").write_text(content, encoding="utf-8")
           PY
 
-          cp build/web/index.html build/web/404.html
+          cat > build/web/version.json <<EOF
+          {
+            "version": "${BUILD_VERSION}",
+            "commit": "${GITHUB_SHA}",
+            "runNumber": "${GITHUB_RUN_NUMBER}"
+          }
+          EOF
+
           touch build/web/.nojekyll
 
-          echo "---- index.html bootstrap tag ----"
-          grep -n "flutter_bootstrap.js" build/web/index.html
-          echo "---- version.json ----"
-          cat build/web/version.json
+      - name: Verify cache busting
+        run: |
+          grep "flutter_bootstrap.js?v=${BUILD_VERSION}" build/web/index.html
+          grep "\"version\": \"${BUILD_VERSION}\"" build/web/version.json
+          test -f build/web/404.html
+          test -f build/web/.nojekyll
 
       - name: Upload Pages artifact
         if: github.ref == 'refs/heads/main'

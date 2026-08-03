@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/constants/app_constants.dart';
+import '../../core/constants/build_info.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/empty_state.dart';
 import '../../core/widgets/item_card.dart';
@@ -146,7 +146,7 @@ class ProfileScreen extends ConsumerWidget {
           const SizedBox(height: 24),
           Center(
             child: Text(
-              'Build ${AppConstants.appBuildVersion}',
+              'Build ${BuildInfo.version}',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: AppColors.textSecondary,
                 fontSize: 12,
