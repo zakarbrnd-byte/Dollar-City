@@ -29,6 +29,7 @@ class _CreateListingScreenState extends ConsumerState<CreateListingScreen> {
   ItemCondition? _condition;
   int _photoCount = 1;
   bool _submitting = false;
+  int _formEpoch = 0;
 
   @override
   void dispose() {
@@ -90,6 +91,7 @@ class _CreateListingScreenState extends ConsumerState<CreateListingScreen> {
       _category = null;
       _condition = null;
       _photoCount = 1;
+      _formEpoch++;
     });
   }
 
@@ -183,34 +185,70 @@ class _CreateListingScreenState extends ConsumerState<CreateListingScreen> {
               },
             ),
             const SizedBox(height: 14),
-            DropdownButtonFormField<ItemCategory>(
-              value: _category,
-              decoration: const InputDecoration(labelText: 'Category'),
-              items: [
-                for (final category in ItemCategory.listingValues)
-                  DropdownMenuItem(
-                    value: category,
-                    child: Text(category.label),
-                  ),
-              ],
-              onChanged: (value) => setState(() => _category = value),
+            FormField<ItemCategory>(
+              key: ValueKey('category_$_formEpoch'),
+              initialValue: _category,
               validator: (value) =>
                   value == null ? 'Category is required' : null,
+              builder: (field) {
+                return InputDecorator(
+                  decoration: InputDecoration(
+                    labelText: 'Category',
+                    errorText: field.errorText,
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<ItemCategory>(
+                      isExpanded: true,
+                      value: field.value,
+                      hint: const Text('Select a category'),
+                      items: [
+                        for (final category in ItemCategory.listingValues)
+                          DropdownMenuItem(
+                            value: category,
+                            child: Text(category.label),
+                          ),
+                      ],
+                      onChanged: (value) {
+                        field.didChange(value);
+                        setState(() => _category = value);
+                      },
+                    ),
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 14),
-            DropdownButtonFormField<ItemCondition>(
-              value: _condition,
-              decoration: const InputDecoration(labelText: 'Condition'),
-              items: [
-                for (final condition in ItemCondition.values)
-                  DropdownMenuItem(
-                    value: condition,
-                    child: Text(condition.label),
-                  ),
-              ],
-              onChanged: (value) => setState(() => _condition = value),
+            FormField<ItemCondition>(
+              key: ValueKey('condition_$_formEpoch'),
+              initialValue: _condition,
               validator: (value) =>
                   value == null ? 'Condition is required' : null,
+              builder: (field) {
+                return InputDecorator(
+                  decoration: InputDecoration(
+                    labelText: 'Condition',
+                    errorText: field.errorText,
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<ItemCondition>(
+                      isExpanded: true,
+                      value: field.value,
+                      hint: const Text('Select a condition'),
+                      items: [
+                        for (final condition in ItemCondition.values)
+                          DropdownMenuItem(
+                            value: condition,
+                            child: Text(condition.label),
+                          ),
+                      ],
+                      onChanged: (value) {
+                        field.didChange(value);
+                        setState(() => _condition = value);
+                      },
+                    ),
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 14),
             TextFormField(
