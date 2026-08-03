@@ -14,12 +14,10 @@ class AppColors {
   static const Color surface = Color(0xFFFFFFFF);
 
   static const Color textPrimary = Color(0xFF1B241E);
-  static const Color textSecondary = Color(0xFF727A74);
+  static const Color textSecondary = Color(0xFF667069);
   static const Color border = Color(0xFFDDE3DE);
   static const Color error = Color(0xFFB3261E);
-  static const Color notificationDot = Color(0xFFE53935);
 
   /// Soft image/placeholder fill derived from the mint family.
   static const Color imageFallback = Color(0xFFE8F2EC);
-  static const Color chipBackground = Color(0xFFF1F4F2);
 }
