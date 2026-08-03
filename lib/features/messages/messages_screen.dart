@@ -69,9 +69,8 @@ class MessagesScreen extends ConsumerWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute<void>(
-                        builder: (_) => ChatScreen(
-                          conversationId: conversation.id,
-                        ),
+                        builder: (_) =>
+                            ChatScreen(conversationId: conversation.id),
                       ),
                     );
                   },

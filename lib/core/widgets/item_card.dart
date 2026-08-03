@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../data/models/market_item.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_spacing.dart';
 import 'status_badge.dart';
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({
-    super.key,
-    required this.item,
-    required this.onTap,
-  });
+  const ItemCard({super.key, required this.item, required this.onTap});
 
   final MarketItem item;
   final VoidCallback onTap;
@@ -26,9 +24,9 @@ class ItemCard extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 16 / 10,
-              child: _ItemImage(url: item.imageUrls.isNotEmpty
-                  ? item.imageUrls.first
-                  : null),
+              child: _ItemImage(
+                url: item.imageUrls.isNotEmpty ? item.imageUrls.first : null,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
@@ -47,11 +45,11 @@ class ItemCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: AppSpacing.small),
                       Text(
                         item.formattedPrice,
                         style: theme.textTheme.titleMedium?.copyWith(
-                          color: const Color(0xFF1B6B4A),
+                          color: AppColors.primary,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -63,22 +61,22 @@ class ItemCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
+                      color: AppColors.textSecondary,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.small),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.near_me_outlined,
                         size: 14,
-                        color: theme.colorScheme.onSurfaceVariant,
+                        color: AppColors.textSecondary,
                       ),
-                      const SizedBox(width: 4),
+                      const SizedBox(width: AppSpacing.extraSmall),
                       Text(
                         '${item.distanceMiles.toStringAsFixed(1)} mi',
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
+                          color: AppColors.textSecondary,
                         ),
                       ),
                       const Spacer(),
@@ -114,7 +112,7 @@ class _ItemImage extends StatelessWidget {
       loadingBuilder: (context, child, progress) {
         if (progress == null) return child;
         return const ColoredBox(
-          color: Color(0xFFE8EEEA),
+          color: AppColors.imageFallback,
           child: Center(
             child: SizedBox(
               width: 24,
@@ -133,13 +131,13 @@ class _ImageFallback extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: const Color(0xFFE8EEEA),
+    return const ColoredBox(
+      color: AppColors.imageFallback,
       child: Center(
         child: Icon(
           Icons.image_outlined,
           size: 40,
-          color: Colors.grey.shade500,
+          color: AppColors.textSecondary,
         ),
       ),
     );

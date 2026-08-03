@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../data/models/item_category.dart';
+import '../theme/app_colors.dart';
 
 class CategoryFilterChip extends StatelessWidget {
   const CategoryFilterChip({
@@ -21,12 +22,16 @@ class CategoryFilterChip extends StatelessWidget {
       selected: selected,
       showCheckmark: false,
       onSelected: onSelected,
-      selectedColor: Theme.of(context).colorScheme.primaryContainer,
+      selectedColor: AppColors.lightMint,
+      backgroundColor: AppColors.surface,
+      side: BorderSide(
+        color: selected
+            ? AppColors.primary.withValues(alpha: 0.35)
+            : AppColors.border,
+      ),
       labelStyle: TextStyle(
         fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-        color: selected
-            ? Theme.of(context).colorScheme.onPrimaryContainer
-            : Theme.of(context).colorScheme.onSurface,
+        color: selected ? AppColors.darkGreen : AppColors.textPrimary,
       ),
     );
   }

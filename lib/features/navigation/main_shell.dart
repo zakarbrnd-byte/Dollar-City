@@ -22,10 +22,7 @@ class MainShell extends ConsumerWidget {
     final index = ref.watch(bottomNavIndexProvider);
 
     return Scaffold(
-      body: IndexedStack(
-        index: index,
-        children: _tabs,
-      ),
+      body: IndexedStack(index: index, children: _tabs),
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
         onDestinationSelected: (value) {

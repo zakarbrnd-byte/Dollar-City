@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/theme/app_colors.dart';
 import '../../core/widgets/empty_state.dart';
 import '../home/providers.dart';
 
@@ -131,13 +132,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                           decoration: BoxDecoration(
                             color: isMine
                                 ? theme.colorScheme.primary
-                                : Colors.white,
+                                : AppColors.surface,
                             borderRadius: BorderRadius.circular(14),
                             border: isMine
                                 ? null
-                                : Border.all(
-                                    color: Colors.black.withValues(alpha: 0.06),
-                                  ),
+                                : Border.all(color: AppColors.border),
                           ),
                           child: Text(
                             message.text,
@@ -158,10 +157,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             child: Row(
               children: [
                 for (final reply in _quickReplies) ...[
-                  ActionChip(
-                    label: Text(reply),
-                    onPressed: () => _send(reply),
-                  ),
+                  ActionChip(label: Text(reply), onPressed: () => _send(reply)),
                   const SizedBox(width: 8),
                 ],
               ],

@@ -13,8 +13,9 @@ import '../../data/models/market_item.dart';
 final bottomNavIndexProvider = StateProvider<int>((ref) => 0);
 
 /// Selected marketplace category filter.
-final selectedCategoryProvider =
-    StateProvider<ItemCategory>((ref) => ItemCategory.all);
+final selectedCategoryProvider = StateProvider<ItemCategory>(
+  (ref) => ItemCategory.all,
+);
 
 /// Current signed-in mock user.
 final currentUserProvider = Provider<AppUser>((ref) => MockData.currentUser);
@@ -52,8 +53,8 @@ class MarketplaceItemsNotifier extends Notifier<List<MarketItem>> {
 
 final marketplaceItemsProvider =
     NotifierProvider<MarketplaceItemsNotifier, List<MarketItem>>(
-  MarketplaceItemsNotifier.new,
-);
+      MarketplaceItemsNotifier.new,
+    );
 
 /// Items filtered by selected category.
 final filteredItemsProvider = Provider<List<MarketItem>>((ref) {
@@ -173,5 +174,5 @@ class ConversationsNotifier extends Notifier<List<ChatConversation>> {
 
 final conversationsProvider =
     NotifierProvider<ConversationsNotifier, List<ChatConversation>>(
-  ConversationsNotifier.new,
-);
+      ConversationsNotifier.new,
+    );

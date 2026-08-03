@@ -1,4 +1,4 @@
-package com.dollarcity.dollar_city
+package com.dollarcity.app
 
 import io.flutter.embedding.android.FlutterActivity
 
