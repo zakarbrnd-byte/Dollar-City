@@ -16,6 +16,7 @@ class MarketItem {
     required this.distanceMiles,
     required this.createdAt,
     this.isSaved = false,
+    this.viewCount = 0,
   });
 
   final String id;
@@ -30,11 +31,20 @@ class MarketItem {
   final double distanceMiles;
   final DateTime createdAt;
   final bool isSaved;
+  final int viewCount;
 
   /// Every listing on Dollar City is exactly $1.
   double get price => 1.00;
 
   String get formattedPrice => '\$1';
+
+  String get createdAtLabel {
+    final diff = DateTime.now().difference(createdAt);
+    if (diff.inMinutes < 60) return '${diff.inMinutes} min ago';
+    if (diff.inHours < 24) return '${diff.inHours} hr ago';
+    if (diff.inDays == 1) return 'Yesterday';
+    return '${diff.inDays} days ago';
+  }
 
   MarketItem copyWith({
     String? id,
@@ -49,6 +59,7 @@ class MarketItem {
     double? distanceMiles,
     DateTime? createdAt,
     bool? isSaved,
+    int? viewCount,
   }) {
     return MarketItem(
       id: id ?? this.id,
@@ -63,6 +74,7 @@ class MarketItem {
       distanceMiles: distanceMiles ?? this.distanceMiles,
       createdAt: createdAt ?? this.createdAt,
       isSaved: isSaved ?? this.isSaved,
+      viewCount: viewCount ?? this.viewCount,
     );
   }
 }

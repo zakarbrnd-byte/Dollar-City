@@ -13,7 +13,7 @@ class StatusBadge extends StatelessWidget {
       case ListingStatus.available:
         return AppColors.lightMint;
       case ListingStatus.reserved:
-        return const Color(0xFFF8F1DF);
+        return AppColors.warmCream;
       case ListingStatus.sold:
         return const Color(0xFFEEF1EF);
     }

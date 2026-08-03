@@ -69,17 +69,21 @@ class MockData {
       MarketItem(
         id: 'item_1',
         sellerId: 'user_1',
-        title: 'Small desk',
+        title: 'Wooden Side Table',
         description:
-            'Compact wooden desk perfect for a small apartment or home office. '
-            'Some light surface scratches but sturdy and clean.',
-        imageUrls: const ['https://picsum.photos/seed/desk/800/600'],
+            'Small wooden side table in good condition. Some light wear on the top. '
+            'Pickup only near Koreatown.',
+        imageUrls: const [
+          'https://picsum.photos/seed/woodtable/800/600',
+          'https://picsum.photos/seed/woodtable2/800/600',
+        ],
         category: ItemCategory.furniture,
         condition: ItemCondition.good,
         status: ListingStatus.available,
-        pickupArea: 'Westside',
+        pickupArea: 'Koreatown',
         distanceMiles: 1.2,
-        createdAt: now.subtract(const Duration(hours: 3)),
+        createdAt: now.subtract(const Duration(minutes: 12)),
+        viewCount: 28,
       ),
       MarketItem(
         id: 'item_2',
@@ -94,8 +98,9 @@ class MockData {
         status: ListingStatus.available,
         pickupArea: 'Midtown',
         distanceMiles: 2.4,
-        createdAt: now.subtract(const Duration(hours: 8)),
+        createdAt: now.subtract(const Duration(minutes: 35)),
         isSaved: true,
+        viewCount: 33,
       ),
       MarketItem(
         id: 'item_3',
@@ -107,9 +112,10 @@ class MockData {
         category: ItemCategory.home,
         condition: ItemCondition.likeNew,
         status: ListingStatus.available,
-        pickupArea: 'North End',
-        distanceMiles: 3.1,
-        createdAt: now.subtract(const Duration(days: 1)),
+        pickupArea: 'Downtown LA',
+        distanceMiles: 2.4,
+        createdAt: now.subtract(const Duration(minutes: 12)),
+        viewCount: 45,
       ),
       MarketItem(
         id: 'item_4',
@@ -123,7 +129,8 @@ class MockData {
         status: ListingStatus.reserved,
         pickupArea: 'Eastside',
         distanceMiles: 0.8,
-        createdAt: now.subtract(const Duration(days: 1, hours: 4)),
+        createdAt: now.subtract(const Duration(hours: 1)),
+        viewCount: 19,
       ),
       MarketItem(
         id: 'item_5',
@@ -138,7 +145,8 @@ class MockData {
         status: ListingStatus.available,
         pickupArea: 'Downtown',
         distanceMiles: 0.3,
-        createdAt: now.subtract(const Duration(days: 2)),
+        createdAt: now.subtract(const Duration(hours: 2)),
+        viewCount: 41,
       ),
       MarketItem(
         id: 'item_6',
@@ -153,8 +161,9 @@ class MockData {
         status: ListingStatus.available,
         pickupArea: 'Riverside',
         distanceMiles: 4.0,
-        createdAt: now.subtract(const Duration(days: 2, hours: 6)),
+        createdAt: now.subtract(const Duration(hours: 3)),
         isSaved: true,
+        viewCount: 22,
       ),
       MarketItem(
         id: 'item_7',
@@ -168,7 +177,8 @@ class MockData {
         status: ListingStatus.sold,
         pickupArea: 'Westside',
         distanceMiles: 1.5,
-        createdAt: now.subtract(const Duration(days: 3)),
+        createdAt: now.subtract(const Duration(hours: 5)),
+        viewCount: 52,
       ),
       MarketItem(
         id: 'item_8',
@@ -182,7 +192,8 @@ class MockData {
         status: ListingStatus.reserved,
         pickupArea: 'Downtown',
         distanceMiles: 0.5,
-        createdAt: now.subtract(const Duration(days: 3, hours: 5)),
+        createdAt: now.subtract(const Duration(hours: 6)),
+        viewCount: 17,
       ),
       MarketItem(
         id: 'item_9',
@@ -197,7 +208,8 @@ class MockData {
         status: ListingStatus.available,
         pickupArea: 'Midtown',
         distanceMiles: 2.0,
-        createdAt: now.subtract(const Duration(days: 4)),
+        createdAt: now.subtract(const Duration(hours: 9)),
+        viewCount: 36,
       ),
       MarketItem(
         id: 'item_10',
@@ -211,7 +223,8 @@ class MockData {
         status: ListingStatus.available,
         pickupArea: 'North End',
         distanceMiles: 2.8,
-        createdAt: now.subtract(const Duration(days: 5)),
+        createdAt: now.subtract(const Duration(hours: 11)),
+        viewCount: 14,
       ),
       MarketItem(
         id: 'item_11',
@@ -225,7 +238,8 @@ class MockData {
         status: ListingStatus.sold,
         pickupArea: 'Downtown',
         distanceMiles: 0.4,
-        createdAt: now.subtract(const Duration(days: 6)),
+        createdAt: now.subtract(const Duration(days: 1)),
+        viewCount: 9,
       ),
     ];
   }
