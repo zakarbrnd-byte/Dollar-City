@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_radius.dart';
 import '../../core/widgets/primary_button.dart';
 import '../../data/mock/mock_data.dart';
 import '../../data/models/item_category.dart';
@@ -76,9 +78,9 @@ class _CreateListingScreenState extends ConsumerState<CreateListingScreen> {
     if (!mounted) return;
     setState(() => _submitting = false);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Listing posted for \$1.')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Listing posted for \$1.')));
 
     _formKey.currentState!.reset();
     _titleController.clear();
@@ -106,13 +108,14 @@ class _CreateListingScreenState extends ConsumerState<CreateListingScreen> {
               width: double.infinity,
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: const Color(0xFFE6F4EC),
-                borderRadius: BorderRadius.circular(10),
+                color: AppColors.warmCream,
+                borderRadius: BorderRadius.circular(AppRadius.medium),
+                border: Border.all(color: AppColors.border),
               ),
               child: Text(
                 'All items on Dollar Market are listed for exactly \$1.',
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: const Color(0xFF1B6B4A),
+                  color: AppColors.darkGreen,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -250,22 +253,23 @@ class _PhotoPlaceholder extends StatelessWidget {
     return Container(
       width: 96,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black.withValues(alpha: 0.08)),
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(AppRadius.medium),
+        border: Border.all(color: AppColors.border),
       ),
       child: Stack(
         children: [
           const Center(
-            child: Icon(Icons.image_outlined, size: 32, color: Colors.grey),
+            child: Icon(
+              Icons.image_outlined,
+              size: 32,
+              color: AppColors.textSecondary,
+            ),
           ),
           Positioned(
             left: 6,
             bottom: 6,
-            child: Text(
-              label,
-              style: Theme.of(context).textTheme.labelSmall,
-            ),
+            child: Text(label, style: Theme.of(context).textTheme.labelSmall),
           ),
           if (onRemove != null)
             Positioned(
@@ -292,29 +296,26 @@ class _AddPhotoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(AppRadius.medium),
       child: Container(
         width: 96,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(AppRadius.medium),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
+            color: AppColors.primary.withValues(alpha: 0.4),
             style: BorderStyle.solid,
           ),
         ),
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.add_a_photo_outlined,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            const SizedBox(height: 6),
+            Icon(Icons.add_a_photo_outlined, color: AppColors.primary),
+            SizedBox(height: 6),
             Text(
               'Add',
               style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
+                color: AppColors.primary,
                 fontWeight: FontWeight.w600,
                 fontSize: 12,
               ),

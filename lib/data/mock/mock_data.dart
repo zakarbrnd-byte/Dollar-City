@@ -60,10 +60,7 @@ class MockData {
   ];
 
   static AppUser userById(String id) {
-    return users.firstWhere(
-      (u) => u.id == id,
-      orElse: () => currentUser,
-    );
+    return users.firstWhere((u) => u.id == id, orElse: () => currentUser);
   }
 
   static List<MarketItem> initialItems() {
@@ -76,9 +73,7 @@ class MockData {
         description:
             'Compact wooden desk perfect for a small apartment or home office. '
             'Some light surface scratches but sturdy and clean.',
-        imageUrls: const [
-          'https://picsum.photos/seed/desk/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/desk/800/600'],
         category: ItemCategory.furniture,
         condition: ItemCondition.good,
         status: ListingStatus.available,
@@ -93,9 +88,7 @@ class MockData {
         description:
             'Lightweight umbrella stroller. Folds easily and has a sun canopy. '
             'Cleaned thoroughly. Pickup only near Midtown park.',
-        imageUrls: const [
-          'https://picsum.photos/seed/stroller/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/stroller/800/600'],
         category: ItemCategory.kids,
         condition: ItemCondition.good,
         status: ListingStatus.available,
@@ -110,9 +103,7 @@ class MockData {
         title: 'Coffee maker',
         description:
             '12-cup drip coffee maker. Works great. Includes carafe and filter basket.',
-        imageUrls: const [
-          'https://picsum.photos/seed/coffee/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/coffee/800/600'],
         category: ItemCategory.home,
         condition: ItemCondition.likeNew,
         status: ListingStatus.available,
@@ -126,9 +117,7 @@ class MockData {
         title: 'Denim jacket',
         description:
             'Classic medium-wash denim jacket, size M. Softened from wear, no holes.',
-        imageUrls: const [
-          'https://picsum.photos/seed/jacket/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/jacket/800/600'],
         category: ItemCategory.clothing,
         condition: ItemCondition.good,
         status: ListingStatus.reserved,
@@ -143,9 +132,7 @@ class MockData {
         description:
             'Tall standing floor lamp with soft white shade. Bulb included. '
             'Slight scuff on the base.',
-        imageUrls: const [
-          'https://picsum.photos/seed/lamp/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/lamp/800/600'],
         category: ItemCategory.home,
         condition: ItemCondition.fair,
         status: ListingStatus.available,
@@ -160,9 +147,7 @@ class MockData {
         description:
             'Bundle of 12 gently used picture books. Great for ages 2–6. '
             'No torn pages.',
-        imageUrls: const [
-          'https://picsum.photos/seed/books/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/books/800/600'],
         category: ItemCategory.kids,
         condition: ItemCondition.good,
         status: ListingStatus.available,
@@ -177,9 +162,7 @@ class MockData {
         title: 'Office chair',
         description:
             'Rolling office chair with adjustable height. Seat cushion is still firm.',
-        imageUrls: const [
-          'https://picsum.photos/seed/chair/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/chair/800/600'],
         category: ItemCategory.furniture,
         condition: ItemCondition.used,
         status: ListingStatus.sold,
@@ -193,9 +176,7 @@ class MockData {
         title: 'Rice cooker',
         description:
             '3-cup rice cooker. Simple one-button operation. Clean and ready to use.',
-        imageUrls: const [
-          'https://picsum.photos/seed/ricecooker/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/ricecooker/800/600'],
         category: ItemCategory.home,
         condition: ItemCondition.likeNew,
         status: ListingStatus.reserved,
@@ -210,9 +191,7 @@ class MockData {
         description:
             'Portable Bluetooth speaker with clear sound. Battery holds a charge. '
             'Small scuff on the side.',
-        imageUrls: const [
-          'https://picsum.photos/seed/speaker/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/speaker/800/600'],
         category: ItemCategory.electronics,
         condition: ItemCondition.good,
         status: ListingStatus.available,
@@ -226,9 +205,7 @@ class MockData {
         title: 'Storage bins',
         description:
             'Set of 4 clear plastic storage bins with lids. Stackable and clean.',
-        imageUrls: const [
-          'https://picsum.photos/seed/bins/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/bins/800/600'],
         category: ItemCategory.other,
         condition: ItemCondition.likeNew,
         status: ListingStatus.available,
@@ -242,9 +219,7 @@ class MockData {
         title: 'Kitchen stool',
         description:
             'Wooden counter-height stool. Solid and stable. Minor wear on seat.',
-        imageUrls: const [
-          'https://picsum.photos/seed/stool/800/600',
-        ],
+        imageUrls: const ['https://picsum.photos/seed/stool/800/600'],
         category: ItemCategory.furniture,
         condition: ItemCondition.good,
         status: ListingStatus.sold,
@@ -341,7 +316,8 @@ class MockData {
             id: 'msg_2_4',
             conversationId: 'chat_2',
             senderId: currentUserId,
-            text: 'Downtown area — I will share the exact spot when you are close.',
+            text:
+                'Downtown area — I will share the exact spot when you are close.',
             sentAt: now.subtract(const Duration(hours: 3, minutes: 30)),
             isMine: true,
           ),

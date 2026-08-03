@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/theme/app_colors.dart';
+import '../../core/widgets/app_logo.dart';
 import '../../core/widgets/category_filter_chip.dart';
 import '../../core/widgets/empty_state.dart';
 import '../../core/widgets/item_card.dart';
@@ -18,7 +20,7 @@ class HomeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dollar City'),
+        title: const AppLogo(size: 32),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -26,9 +28,9 @@ class HomeScreen extends ConsumerWidget {
               child: Text(
                 'Pickup only · \$1',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  color: AppColors.textSecondary,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

@@ -2,7 +2,11 @@
 
 Local, pickup-only used marketplace where every item is listed for exactly **$1**.
 
-This MVP is built with **Flutter**, **Dart**, **Riverpod**, and **Material 3**, using in-memory mock data only (no backend, auth, payments, shipping, or maps).
+**Tagline:** Everything is $1. Pick it up nearby.
+
+Built with **Flutter**, **Dart**, **Riverpod**, and **Material 3**, using in-memory mock data only (no backend, auth, payments, shipping, or maps).
+
+This branch layers the **Dollar City design system** (Dollar Green palette, spacing/radius tokens, shared widgets) on top of the existing marketplace MVP.
 
 ## Features
 
@@ -12,46 +16,20 @@ This MVP is built with **Flutter**, **Dart**, **Riverpod**, and **Material 3**, 
 - **Profile** — user info, active/reserved/sold listings, saved items
 - Listing statuses: Available, Reserved, Sold (changeable by the seller)
 
-## Requirements
-
-- Flutter SDK 3.32+ (Dart 3.8+)
-- Android Studio / Xcode / Chrome for your target platform
-
 ## Run
 
 ```bash
 flutter pub get
+dart format .
 flutter analyze
 flutter run
 ```
 
-Examples:
+## Design tokens
 
-```bash
-flutter run -d chrome
-flutter run -d android
-flutter run -d ios
-```
+Primary Dollar Green `#2E7D4F`, Dark Green `#174D32`, Light Mint `#DDEFE4`, Warm Cream `#F7F3E8`, Soft Gold `#C9A84C`, Background `#FAFBF8`, Surface `#FFFFFF`.
 
-## Project structure
-
-```
-lib/
-  main.dart
-  app.dart
-  core/theme/
-  core/widgets/
-  data/models/
-  data/mock/
-  features/home/
-  features/item_details/
-  features/create_listing/
-  features/messages/
-  features/profile/
-  features/navigation/
-```
-
-## Limitations (MVP)
+## Limitations
 
 - All data is local and resets when the app restarts
 - No authentication, payments, shipping, maps, or remote APIs

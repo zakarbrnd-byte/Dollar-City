@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UserAvatar extends StatelessWidget {
-  const UserAvatar({
-    super.key,
-    this.imageUrl,
-    this.name,
-    this.radius = 24,
-  });
+  const UserAvatar({super.key, this.imageUrl, this.name, this.radius = 24});
 
   final String? imageUrl;
   final String? name;

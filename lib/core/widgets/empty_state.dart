@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_colors.dart';
+import '../theme/app_spacing.dart';
+import '../theme/app_text_styles.dart';
+
 class EmptyState extends StatelessWidget {
   const EmptyState({
     super.key,
@@ -16,39 +20,31 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(AppSpacing.extraLarge),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 56,
-              color: theme.colorScheme.outline,
-            ),
-            const SizedBox(height: 16),
+            Icon(icon, size: 56, color: AppColors.textSecondary),
+            const SizedBox(height: AppSpacing.medium),
             Text(
               title,
               textAlign: TextAlign.center,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              style: AppTextStyles.title,
             ),
             if (message != null) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.small),
               Text(
                 message!,
                 textAlign: TextAlign.center,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.textSecondary,
                 ),
               ),
             ],
             if (action != null) ...[
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.large - 4),
               action!,
             ],
           ],

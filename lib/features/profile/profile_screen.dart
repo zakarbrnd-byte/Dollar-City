@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/theme/app_colors.dart';
 import '../../core/widgets/empty_state.dart';
 import '../../core/widgets/item_card.dart';
 import '../../core/widgets/status_badge.dart';
@@ -126,22 +127,21 @@ class ProfileScreen extends ConsumerWidget {
               message: 'Tap Save on a listing to keep it here.',
               icon: Icons.bookmark_border,
             )
-          else
-            ...[
-              for (final item in saved) ...[
-                ItemCard(
-                  item: item,
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (_) => ItemDetailsScreen(itemId: item.id),
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 12),
-              ],
+          else ...[
+            for (final item in saved) ...[
+              ItemCard(
+                item: item,
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => ItemDetailsScreen(itemId: item.id),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 12),
             ],
+          ],
         ],
       ),
     );
@@ -185,68 +185,64 @@ class _ListingSection extends StatelessWidget {
               ),
             ),
           )
-        else
-          ...[
-            for (final item in items) ...[
-              Card(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: SizedBox(
-                      width: 56,
-                      height: 56,
-                      child: item.imageUrls.isEmpty
-                          ? const ColoredBox(
-                              color: Color(0xFFE8EEEA),
-                              child: Icon(Icons.image_outlined),
-                            )
-                          : Image.network(
-                              item.imageUrls.first,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => const ColoredBox(
-                                color: Color(0xFFE8EEEA),
-                                child: Icon(Icons.image_outlined),
-                              ),
-                            ),
-                    ),
-                  ),
-                  title: Text(
-                    item.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontWeight: FontWeight.w700),
-                  ),
-                  subtitle: Padding(
-                    padding: const EdgeInsets.only(top: 6),
-                    child: StatusBadge(status: item.status),
-                  ),
-                  trailing: PopupMenuButton<ListingStatus>(
-                    tooltip: 'Change status',
-                    onSelected: (status) => onStatusChange(item, status),
-                    itemBuilder: (context) => [
-                      for (final status in ListingStatus.values)
-                        PopupMenuItem(
-                          value: status,
-                          child: Text(status.label),
-                        ),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (_) => ItemDetailsScreen(itemId: item.id),
-                      ),
-                    );
-                  },
+        else ...[
+          for (final item in items) ...[
+            Card(
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
                 ),
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: SizedBox(
+                    width: 56,
+                    height: 56,
+                    child: item.imageUrls.isEmpty
+                        ? const ColoredBox(
+                            color: AppColors.imageFallback,
+                            child: Icon(Icons.image_outlined),
+                          )
+                        : Image.network(
+                            item.imageUrls.first,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => const ColoredBox(
+                              color: AppColors.imageFallback,
+                              child: Icon(Icons.image_outlined),
+                            ),
+                          ),
+                  ),
+                ),
+                title: Text(
+                  item.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: StatusBadge(status: item.status),
+                ),
+                trailing: PopupMenuButton<ListingStatus>(
+                  tooltip: 'Change status',
+                  onSelected: (status) => onStatusChange(item, status),
+                  itemBuilder: (context) => [
+                    for (final status in ListingStatus.values)
+                      PopupMenuItem(value: status, child: Text(status.label)),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => ItemDetailsScreen(itemId: item.id),
+                    ),
+                  );
+                },
               ),
-              const SizedBox(height: 8),
-            ],
+            ),
+            const SizedBox(height: 8),
           ],
+        ],
       ],
     );
   }

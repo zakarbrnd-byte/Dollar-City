@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/theme/app_colors.dart';
 import '../../core/widgets/empty_state.dart';
 import '../../core/widgets/primary_button.dart';
 import '../../core/widgets/status_badge.dart';
@@ -90,7 +91,7 @@ class ItemDetailsScreen extends ConsumerWidget {
                         loadingBuilder: (context, child, progress) {
                           if (progress == null) return child;
                           return const ColoredBox(
-                            color: Color(0xFFE8EEEA),
+                            color: AppColors.imageFallback,
                             child: Center(
                               child: CircularProgressIndicator(strokeWidth: 2),
                             ),
@@ -120,7 +121,7 @@ class ItemDetailsScreen extends ConsumerWidget {
                     Text(
                       listing.formattedPrice,
                       style: theme.textTheme.headlineSmall?.copyWith(
-                        color: const Color(0xFF1B6B4A),
+                        color: AppColors.primary,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -291,12 +292,12 @@ class _DetailsImageFallback extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: const Color(0xFFE8EEEA),
+      color: AppColors.imageFallback,
       child: Center(
         child: Icon(
           Icons.image_outlined,
           size: 56,
-          color: Colors.grey.shade500,
+          color: AppColors.textSecondary,
         ),
       ),
     );
