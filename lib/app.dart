@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'core/constants/app_constants.dart';
 import 'core/theme/app_theme.dart';
-import 'features/navigation/main_shell.dart';
+import 'navigation/main_navigation_screen.dart';
 
 class DollarCityApp extends StatelessWidget {
   const DollarCityApp({super.key});
@@ -13,7 +13,7 @@ class DollarCityApp extends StatelessWidget {
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
-      home: const MainShell(),
+      home: const MainNavigationScreen(),
     );
   }
 }
