@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - cursor/dollar-city-foundation-a9f5
+      - cursor/web-cache-busting-a9f5
   workflow_dispatch:
 
 permissions:
@@ -38,18 +39,63 @@ jobs:
       - name: Test
         run: flutter test
 
+      - name: Create build version
+        run: |
+          echo "BUILD_VERSION=${GITHUB_SHA::8}-${GITHUB_RUN_NUMBER}" >> "$GITHUB_ENV"
+
       - name: Build web
         run: |
-          flutter build web --release --base-href "/Dollar-City/"
-          cp build/web/index.html build/web/404.html
+          flutter build web \
+            --release \
+            --base-href "/Dollar-City/" \
+            --dart-define=APP_BUILD_VERSION="${BUILD_VERSION}"
+
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+
+          version = os.environ["BUILD_VERSION"]
+
+          index_path = Path("build/web/index.html")
+          content = index_path.read_text(encoding="utf-8")
+
+          old = 'src="flutter_bootstrap.js"'
+          new = f'src="flutter_bootstrap.js?v={version}"'
+
+          if old not in content:
+              raise RuntimeError("flutter_bootstrap.js script tag was not found")
+
+          content = content.replace(old, new, 1)
+          index_path.write_text(content, encoding="utf-8")
+
+          Path("build/web/404.html").write_text(content, encoding="utf-8")
+          PY
+
+          cat > build/web/version.json <<EOF
+          {
+            "version": "${BUILD_VERSION}",
+            "commit": "${GITHUB_SHA}",
+            "runNumber": "${GITHUB_RUN_NUMBER}"
+          }
+          EOF
+
           touch build/web/.nojekyll
 
+      - name: Verify cache busting
+        run: |
+          grep "flutter_bootstrap.js?v=${BUILD_VERSION}" build/web/index.html
+          grep "\"version\": \"${BUILD_VERSION}\"" build/web/version.json
+          test -f build/web/404.html
+          test -f build/web/.nojekyll
+
       - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/web
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment:
