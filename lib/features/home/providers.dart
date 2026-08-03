@@ -20,6 +20,11 @@ final selectedCategoryProvider = StateProvider<ItemCategory>(
 /// Current signed-in mock user.
 final currentUserProvider = Provider<AppUser>((ref) => MockData.currentUser);
 
+/// Resolves a mock seller by ID.
+final sellerByIdProvider = Provider.family<AppUser, String>((ref, sellerId) {
+  return MockData.userById(sellerId);
+});
+
 /// Marketplace items held in memory.
 class MarketplaceItemsNotifier extends Notifier<List<MarketItem>> {
   @override
@@ -40,6 +45,16 @@ class MarketplaceItemsNotifier extends Notifier<List<MarketItem>> {
     state = [
       for (final item in state)
         if (item.id == itemId) item.copyWith(status: status) else item,
+    ];
+  }
+
+  void incrementViewCount(String itemId) {
+    state = [
+      for (final item in state)
+        if (item.id == itemId)
+          item.copyWith(viewCount: item.viewCount + 1)
+        else
+          item,
     ];
   }
 

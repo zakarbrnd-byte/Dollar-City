@@ -47,4 +47,11 @@ class AppTextStyles {
     height: 1.35,
     color: AppColors.textSecondary,
   );
+
+  static const TextStyle price = TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.w800,
+    height: 1.2,
+    color: AppColors.primary,
+  );
 }

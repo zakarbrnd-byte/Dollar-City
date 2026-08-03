@@ -6,8 +6,8 @@ import '../../core/widgets/app_logo.dart';
 import '../../core/widgets/category_filter_chip.dart';
 import '../../core/widgets/empty_state.dart';
 import '../../core/widgets/marketplace_post_tile.dart';
-import '../../data/mock/mock_marketplace_posts.dart';
 import '../../data/models/item_category.dart';
+import '../item_details/item_details_screen.dart';
 import 'providers.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -16,7 +16,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = ref.watch(selectedCategoryProvider);
-    final posts = MockMarketplacePosts.all;
+    final items = ref.watch(filteredItemsProvider);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -60,25 +60,25 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
           Expanded(
-            child: posts.isEmpty
-                ? const EmptyState(
+            child: items.isEmpty
+                ? EmptyState(
                     title: 'No listings yet',
-                    message: 'Check back soon for \$1 pickup finds near you.',
+                    message: selected == ItemCategory.all
+                        ? 'Check back soon for \$1 pickup finds near you.'
+                        : 'Nothing in ${selected.label} right now.',
                     icon: Icons.storefront_outlined,
                   )
                 : ListView.builder(
-                    itemCount: posts.length,
+                    itemCount: items.length,
                     itemBuilder: (context, index) {
-                      final post = posts[index];
+                      final item = items[index];
                       return MarketplacePostTile(
-                        imageUrl: post.imageUrl,
-                        title: post.title,
-                        postedTime: post.createdAtLabel,
-                        viewCount: post.viewCount,
+                        item: item,
                         onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Item details coming next.'),
+                          Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) =>
+                                  ItemDetailsScreen(itemId: item.id),
                             ),
                           );
                         },
