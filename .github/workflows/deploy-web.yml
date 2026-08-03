@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - cursor/dollar-city-foundation-a9f5
+      - cursor/web-cache-busting-a9f5
   workflow_dispatch:
 
 permissions:
@@ -40,16 +41,64 @@ jobs:
 
       - name: Build web
         run: |
-          flutter build web --release --base-href "/Dollar-City/"
+          BUILD_VERSION="${GITHUB_SHA::8}-${GITHUB_RUN_NUMBER}"
+          export BUILD_VERSION
+          echo "Building Dollar City web with version ${BUILD_VERSION}"
+
+          flutter build web \
+            --release \
+            --base-href "/Dollar-City/" \
+            --dart-define=APP_BUILD_VERSION="${BUILD_VERSION}"
+
+          # Cache-bust Flutter bootstrap so Safari does not reuse a stale script.
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          import os
+
+          build_version = os.environ["BUILD_VERSION"]
+          path = Path("build/web/index.html")
+          content = path.read_text()
+          if 'src="flutter_bootstrap.js"' not in content:
+              raise SystemExit("flutter_bootstrap.js script tag not found in index.html")
+          content = content.replace(
+              'src="flutter_bootstrap.js"',
+              f'src="flutter_bootstrap.js?v={build_version}"',
+          )
+          path.write_text(content)
+          print(f"Updated index.html bootstrap cache buster to v={build_version}")
+
+          version_path = Path("build/web/version.json")
+          version_path.write_text(
+              json.dumps(
+                  {
+                      "version": build_version,
+                      "commit": os.environ["GITHUB_SHA"],
+                      "runNumber": str(os.environ["GITHUB_RUN_NUMBER"]),
+                  },
+                  indent=2,
+              )
+              + "\n"
+          )
+          print(f"Wrote {version_path}")
+          PY
+
           cp build/web/index.html build/web/404.html
           touch build/web/.nojekyll
 
+          echo "---- index.html bootstrap tag ----"
+          grep -n "flutter_bootstrap.js" build/web/index.html
+          echo "---- version.json ----"
+          cat build/web/version.json
+
       - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/web
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment:
